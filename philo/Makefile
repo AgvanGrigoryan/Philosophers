@@ -6,7 +6,7 @@
 #    By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:16:56 by aggrigor          #+#    #+#              #
-#    Updated: 2024/04/03 15:58:25 by aggrigor         ###   ########.fr        #
+#    Updated: 2024/04/04 16:30:30 by aggrigor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ OBJS_DIR = objs/
 # Source file names
 SRCS_NAME = main.c\
 			init_vars.c\
+			simulation.c\
+			checks.c\
 			utils.c\
-			ft_atoi.c\
-			ft_strlen.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
