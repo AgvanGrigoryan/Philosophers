@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 16:59:26 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/04 17:34:41 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:02:04 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ bool	init_vars(t_vars *vars)
 		vars->philos[i].eaten_amount = 0;
 		vars->philos[i].vars = vars;
 		vars->philos[i].is_dead = &vars->is_dead;
+		vars->philos[i].last_eat_time = LLONG_MAX; // move to before simulation and change value
 		i++;
 	}
 	return (true);
