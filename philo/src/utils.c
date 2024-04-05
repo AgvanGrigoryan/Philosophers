@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:35:54 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/04 16:29:24 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:17:11 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	my_usleep(long long ms, t_philo *philo)
 	{
 		if (is_dead(philo) == true)
 			break ;
-		usleep(10);
+		usleep(500);
 	}
 }
 

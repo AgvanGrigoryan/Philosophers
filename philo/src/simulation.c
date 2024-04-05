@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:45:16 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/04 19:06:09 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:56:47 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ void	eat_process(t_philo *philo, t_timeval *time)
 	if (is_dead(philo) == true)
 		return ;
 	mut_print(philo, time, philo->id, "is eating");
+	my_usleep(philo->vars->time_to_eat, philo);
 	pthread_mutex_lock(&philo->last_eat_mutex);
 	philo->last_eat_time = time_in_ms(time);
 	pthread_mutex_unlock(&philo->last_eat_mutex);
-	my_usleep(philo->vars->time_to_eat, philo);
-	pthread_mutex_lock(&philo->eaten_amount_mutex);
-	philo->eaten_amount++;
-	pthread_mutex_unlock(&philo->eaten_amount_mutex);
+	if (philo->vars->meals_amount != -1)
+	{
+		pthread_mutex_lock(&philo->eaten_amount_mutex);
+		philo->eaten_amount++;
+		pthread_mutex_unlock(&philo->eaten_amount_mutex);
+	}
 }
 
 void	sleep_process(t_philo *philo, t_timeval *time)
@@ -67,12 +70,9 @@ void	*philo_sim(t_philo *philo)
 	r_fork = &philo->vars->forks[(philo->id + 1) % philo->vars->philos_num];
 	if ((philo->id + 1) % 2 == 0)
 		my_usleep(philo->vars->time_to_eat, philo);
-	if (philo->vars->philos_num == 1)
-	{
-		pthread_mutex_lock(&philo->last_eat_mutex);
-		philo->last_eat_time = time_in_ms(&time);
-		pthread_mutex_unlock(&philo->last_eat_mutex);
-	}
+	pthread_mutex_lock(&philo->last_eat_mutex);
+	philo->last_eat_time = time_in_ms(&time);
+	pthread_mutex_unlock(&philo->last_eat_mutex);
 	while (is_dead(philo) == false)
 	{
 		mut_print(philo, &time, philo->id, "is thinking");

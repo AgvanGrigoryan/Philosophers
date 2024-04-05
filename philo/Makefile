@@ -6,7 +6,7 @@
 #    By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:16:56 by aggrigor          #+#    #+#              #
-#    Updated: 2024/04/04 16:30:30 by aggrigor         ###   ########.fr        #
+#    Updated: 2024/04/05 17:38:26 by aggrigor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = philo
 # Compilator
 CC = cc
 # Compilator flags
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 
 # Headers
 HEADERS = inc/philo.h
