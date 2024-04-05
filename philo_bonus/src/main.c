@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/31 15:08:37 by aggrigor          #+#    #+#             */
+/*   Updated: 2024/04/05 18:10:57 by aggrigor         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/philo_bonus.h"
+
+int	main(int argc, char *argv[])
+{
+	t_vars	vars;
+
+	if (validate_input(argc, argv, &vars) == false)
+	{
+		printf("\033[0;036mProgram expected arguments(numbers):\
+		\n\tnumber_of_philosophers\n\ttime_to_die\n\ttime_to_eat\
+		\n\ttime_to_sleep\
+		\n\t[number_of_times_each_philosopher_must_eat]\n");
+		return (1);
+	}
+	// init variables and start simulation
+	return (0);
+}
