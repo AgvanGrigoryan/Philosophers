@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:03:38 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/04 19:06:12 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:17:51 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ typedef pthread_mutex_t	t_fork_mutex;
 // DEFINITIONS
 typedef struct s_philo
 {
-	int				id;//
+	int				id;
 	pthread_t		tid;
 
 	long long		last_eat_time;
-	int				eaten_amount;//
-	pthread_mutex_t	last_eat_mutex;//
-	pthread_mutex_t	eaten_amount_mutex;//
-	struct s_vars	*vars;//
-	bool			*is_dead;//
+	int				eaten_amount;
+	pthread_mutex_t	last_eat_mutex;
+	pthread_mutex_t	eaten_amount_mutex;
+	struct s_vars	*vars;
+	bool			*is_dead;
 }	t_philo;
 
 typedef struct s_vars
@@ -65,11 +65,11 @@ typedef struct s_vars
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	dead_mutex;
-	int				time_to_sleep;//
-	int				time_to_eat;//
-	int				time_to_die;//
-	int				meals_amount;//
-	bool			is_dead;//
+	int				time_to_sleep;
+	int				time_to_eat;
+	int				time_to_die;
+	int				meals_amount;
+	bool			is_dead;
 }	t_vars;
 
 // FUNCTIONS PROTOTYPES
