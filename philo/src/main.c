@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:08:37 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/04 16:41:33 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:14:07 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ int	main(int argc, char *argv[])
 		return (1);
 	init_mutex(&vars);
 	start_simulation(&vars);
+	return (0);
 }
