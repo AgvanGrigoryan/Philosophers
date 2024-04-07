@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:27:36 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/05 22:37:47 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/07 20:04:46 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,49 @@ bool	is_dead(t_vars *vars)
 {
 	bool	is_philo_dead;
 
-	sem_lock(vars->dead_sem);
-	is_philo_dead = *(philo->is_dead);
-	sem_unlock(vars->dead_sem);
+	sem_wait(vars->dead_sem);
+	is_philo_dead = vars->is_dead;
+	sem_post(vars->dead_sem);
 	return (is_philo_dead);
+}
+
+void	*philo_checker(t_vars *vars)
+{
+	while (1)
+	{
+		if (check_die(vars) == true || check_eaten_amount(vars) == true)
+			exit(0);
+	}
 }
 
 bool	check_die(t_vars *vars)
 {
 	t_timeval	time;
-	int			i;
 
-	i = 0;
-	while (i < vars->philos_num)
+	sem_wait(vars->last_eat_sem);
+	if (time_in_ms(&time) - vars->last_eat_time > vars->time_to_die)
 	{
-		pthread_mutex_lock(&vars->philos[i].last_eat_mutex);
-		if (time_in_ms(&time) - vars->philos[i].last_eat_time
-			> vars->time_to_die)
-		{
-			mut_print(vars->philos + i, &time, vars->philos[i].id, "died");
-			pthread_mutex_lock(&vars->dead_mutex);
-			vars->is_dead = true;
-			pthread_mutex_unlock(&vars->dead_mutex);
-			pthread_mutex_unlock(&vars->philos[i].last_eat_mutex);
-			return (true);
-		}
-		pthread_mutex_unlock(&vars->philos[i].last_eat_mutex);
-		i++;
+		mut_print(vars, &time, "died");
+		sem_wait(vars->dead_sem);
+		vars->is_dead = true;
+		sem_post(vars->dead_sem);
+		sem_post(vars->last_eat_sem);
+		return (true);
 	}
+	sem_post(vars->last_eat_sem);
 	return (false);
 }
 
 bool	check_eaten_amount(t_vars *vars)
 {
-	int	already_eaten;
-	int	i;
+	bool	ate_already;
 
-	if (vars->meals_amount == -1)
+	if (vars->must_eat_amount == -1)
 		return (false);
-	i = 0;
-	already_eaten = 0;
-	while (i < vars->philos_num)
-	{
-		pthread_mutex_lock(&vars->philos[i].eaten_amount_mutex);
-		if (vars->philos[i].eaten_amount >= vars->meals_amount)
-			already_eaten++;
-		pthread_mutex_unlock(&vars->philos[i].eaten_amount_mutex);
-		i++;
-	}
-	if (already_eaten == vars->philos_num)
-	{
-		pthread_mutex_lock(&vars->dead_mutex);
-		vars->is_dead = true;
-		pthread_mutex_unlock(&vars->dead_mutex);
-		return (true);
-	}
-	return (false);
+	ate_already = false;
+	sem_wait(vars->eaten_amount_sem);
+	if (vars->eaten_amount >= vars->must_eat_amount)
+		ate_already = true;
+	sem_post(vars->eaten_amount_sem);
+	return (ate_already);
 }

@@ -6,7 +6,7 @@
 #    By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:16:56 by aggrigor          #+#    #+#              #
-#    Updated: 2024/04/05 18:08:00 by aggrigor         ###   ########.fr        #
+#    Updated: 2024/04/07 20:01:58 by aggrigor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 # Compilation process
 all: $(NAME)
+
+bonus: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) -lpthread

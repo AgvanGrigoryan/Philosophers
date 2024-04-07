@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:35:54 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/05 22:38:51 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/07 20:06:36 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 
 void	mut_print(t_vars *vars, t_timeval *time, char *action)
 {
+	sem_wait(vars->print_sem);
 	if (is_dead(vars) == false)
-		printf("%lld %d %s\n", time_in_ms(time), vars->philo->id + 1, action);
-
+		printf("%lld %d %s\n", time_in_ms(time), vars->id + 1, action);
+	sem_wait(vars->print_sem);
 }
 
 long long	time_in_ms(t_timeval *time)
@@ -27,7 +28,7 @@ long long	time_in_ms(t_timeval *time)
 	return ((time->tv_sec * 1000) + (time->tv_usec / 1000));
 }
 
-void	my_usleep(long long ms, t_philo *philo)
+void	my_usleep(long long ms, t_vars *vars)
 {
 	long long	start;
 	t_timeval	time;
@@ -35,7 +36,7 @@ void	my_usleep(long long ms, t_philo *philo)
 	start = time_in_ms(&time);
 	while (time_in_ms(&time) - start <= ms)
 	{
-		if (is_dead(philo) == true)
+		if (is_dead(vars) == true)
 			break ;
 		usleep(10);
 	}
