@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:35:54 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/07 20:06:36 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:42:22 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	mut_print(t_vars *vars, t_timeval *time, char *action)
 	sem_wait(vars->print_sem);
 	if (is_dead(vars) == false)
 		printf("%lld %d %s\n", time_in_ms(time), vars->id + 1, action);
-	sem_wait(vars->print_sem);
+	sem_post(vars->print_sem);
 }
 
 long long	time_in_ms(t_timeval *time)

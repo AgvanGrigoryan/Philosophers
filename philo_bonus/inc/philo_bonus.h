@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:03:38 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/07 20:08:55 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:04:08 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 // malloc, free  
 # include <stdlib.h>
 
+// kill
+# include <signal.h>
+
 // gettimeofday
 # include <sys/time.h>
 
@@ -46,6 +49,14 @@
 
 struct					s_vars;
 typedef struct timeval	t_timeval;
+
+
+# define LAST_EAT_SEM "/last_eat"
+# define EATEN_AMOUNT_SEM "/eaten_amount"
+# define DEAD_SEM "/dead_sem"
+# define FORKS_SEM "/forks"
+# define LAST_EAT_SEM "/last_eat_sem"
+# define PRINT_SEM "/print_sem"
 
 // DEFINITIONS
 typedef struct s_vars

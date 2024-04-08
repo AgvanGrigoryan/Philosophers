@@ -6,25 +6,18 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:08:37 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/07 20:05:48 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:55:13 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
-
-bool	config_philo_process_args(t_vars *vars, pid_t pid, int i)
-{
-	vars->last_eat_sem = sem_open("/last_eat", O_CREAT, 0777, 1);
-	vars->eaten_amount_sem = sem_open("/eaten_amount", O_CREAT, 0777, 1);
-	vars->dead_sem = sem_open("/dead_sem", O_CREAT, 0777, 1);
-	if (vars->last_eat_sem == SEM_FAILED
-		|| vars->eaten_amount_sem == SEM_FAILED
-		|| vars->dead_sem == SEM_FAILED)
-		return (false);
-	vars->philos_pids[i] = pid;
-	vars->id = i;
-	return (true);
-}
+#include <stdlib.h>
+// bool	config_philo_process_args(t_vars *vars, pid_t pid, int i)
+// {
+// 	vars->philos_pids[i] = pid;
+// 	vars->id = i;
+// 	return (true);
+// }
 
 bool	start_simulation(t_vars *vars)
 {
@@ -39,18 +32,26 @@ bool	start_simulation(t_vars *vars)
 			return (false);
 		if (pid == 0)
 		{
-			if (config_philo_process_args(vars, pid, i) == false)
-				return (false);
+			vars->philos_pids[i] = pid;
+			vars->id = i;
 			philo_sim(vars);
+			exit(0);
 		}
 		i++;
 	}
+	pid = waitpid(-1, NULL, 0);
+	kill(0, SIGTERM);
 	i = 0;
-	while (i < vars->philos_num)
-	{
+	while (i < vars->philos_num - 1)
 		waitpid(-1, NULL, 0);
-		i++;
-	}
+	// i = 0;
+	// while (i < vars->philos_num)
+	// {
+	// 	if (vars->philos_pids[i] == pid)
+	// 		continue;
+	// 	kill(vars->philos_pids[i], SIGTERM)
+	// }
+
 	return (true);
 	// CLEAR DESTROY SEMAPHORES
 }

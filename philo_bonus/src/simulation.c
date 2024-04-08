@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:45:16 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/07 20:08:08 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:55:25 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*philo_sim(t_vars *vars)
 	if (pthread_create(&vars->checker_tid, NULL,
 			(void *)philo_checker, vars) != 0)
 		exit(1);
-	while (is_dead(vars) == false)
+	while (true)
 	{
 		mut_print(vars, &time, "is thinking");
 		pick_forks(&time, vars);
