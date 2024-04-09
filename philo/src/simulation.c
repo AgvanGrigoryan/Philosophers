@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:45:16 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/05 17:56:47 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:01:07 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ void	*philo_sim(t_philo *philo)
 
 	l_fork = &philo->vars->forks[philo->id];
 	r_fork = &philo->vars->forks[(philo->id + 1) % philo->vars->philos_num];
-	if ((philo->id + 1) % 2 == 0)
-		my_usleep(philo->vars->time_to_eat, philo);
 	pthread_mutex_lock(&philo->last_eat_mutex);
 	philo->last_eat_time = time_in_ms(&time);
 	pthread_mutex_unlock(&philo->last_eat_mutex);
+	if ((philo->id + 1) % 2 == 0)
+		my_usleep(philo->vars->time_to_eat, philo);
 	while (is_dead(philo) == false)
 	{
 		mut_print(philo, &time, philo->id, "is thinking");
