@@ -6,7 +6,7 @@
 #    By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/28 16:16:56 by aggrigor          #+#    #+#              #
-#    Updated: 2024/04/08 17:41:55 by aggrigor         ###   ########.fr        #
+#    Updated: 2024/04/09 13:19:56 by aggrigor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = philo_bonus
 # Compilator
 CC = cc
 # Compilator flags
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=thread
 
 # Headers
 HEADERS = inc/philo_bonus.h

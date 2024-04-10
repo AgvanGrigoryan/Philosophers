@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:45:16 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/08 18:55:25 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:35:15 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	put_forks(t_vars *vars)
 
 void	eat_process(t_vars *vars, t_timeval *time)
 {
-	if (is_dead(vars) == true)
-		return ;
 	mut_print(vars, time, "is eating");
 	sem_wait(vars->last_eat_sem);
 	vars->last_eat_time = time_in_ms(time);
@@ -42,13 +40,11 @@ void	eat_process(t_vars *vars, t_timeval *time)
 
 void	sleep_process(t_vars *vars, t_timeval *time)
 {
-	if (is_dead(vars) == true)
-		return ;
 	mut_print(vars, time, "is sleeping");
 	my_usleep(vars->time_to_sleep, vars);
 }
 
-void	*philo_sim(t_vars *vars)
+void	philo_sim(t_vars *vars)
 {
 	t_timeval		time;
 
@@ -66,5 +62,6 @@ void	*philo_sim(t_vars *vars)
 		put_forks(vars);
 		sleep_process(vars, &time);
 	}
-	return (NULL);
+	pthread_join(vars->checker_tid, NULL);
+	exit(0);
 }

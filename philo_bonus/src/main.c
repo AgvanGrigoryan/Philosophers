@@ -6,12 +6,12 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:08:37 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/08 18:55:13 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:34:42 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
-#include <stdlib.h>
+// #include <stdlib.h>
 // bool	config_philo_process_args(t_vars *vars, pid_t pid, int i)
 // {
 // 	vars->philos_pids[i] = pid;
@@ -19,41 +19,49 @@
 // 	return (true);
 // }
 
-bool	start_simulation(t_vars *vars)
+void	wait_processes(t_vars *vars)
 {
-	pid_t	pid;
 	int		i;
+	int		exit_status;
+	pid_t	pid;
 
 	i = 0;
-	while (i < vars->philos_num)
+	while (i <= vars->philos_num)
 	{
-		pid = fork();
-		if (pid == -1)
-			return (false);
-		if (pid == 0)
+		pid = waitpid(-1, &exit_status, 0);
+		if (WEXITSTATUS(exit_status) > 0)
 		{
-			vars->philos_pids[i] = pid;
-			vars->id = i;
-			philo_sim(vars);
-			exit(0);
+			i = 0;
+			while (i < vars->philos_num)
+			{
+				if (vars->philos_pids[i] != pid)
+					kill(vars->philos_pids[i], SIGKILL);
+				i++;
+			}
+			break ;
 		}
 		i++;
 	}
-	pid = waitpid(-1, NULL, 0);
-	kill(0, SIGTERM);
-	i = 0;
-	while (i < vars->philos_num - 1)
-		waitpid(-1, NULL, 0);
-	// i = 0;
-	// while (i < vars->philos_num)
-	// {
-	// 	if (vars->philos_pids[i] == pid)
-	// 		continue;
-	// 	kill(vars->philos_pids[i], SIGTERM)
-	// }
+}
 
+bool	start_simulation(t_vars *vars)
+{
+	int		i;
+
+	i = -1;
+	while (++i < vars->philos_num)
+	{
+		vars->philos_pids[i] = fork();
+		if (vars->philos_pids[i] == -1)
+			return (false);
+		if (vars->philos_pids[i] == 0)
+		{
+			vars->id = i;
+			philo_sim(vars);
+		}
+	}
+	wait_processes(vars);
 	return (true);
-	// CLEAR DESTROY SEMAPHORES
 }
 
 int	main(int argc, char *argv[])
@@ -75,5 +83,6 @@ int	main(int argc, char *argv[])
 	}
 	if (start_simulation(&vars) == false)
 		return (1);
+	close_sems_and_unlink(&vars);
 	return (0);
 }

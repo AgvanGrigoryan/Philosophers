@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:03:38 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/08 19:04:08 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:18:54 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@
 struct					s_vars;
 typedef struct timeval	t_timeval;
 
-
-# define LAST_EAT_SEM "/last_eat"
-# define EATEN_AMOUNT_SEM "/eaten_amount"
-# define DEAD_SEM "/dead_sem"
 # define FORKS_SEM "/forks"
-# define LAST_EAT_SEM "/last_eat_sem"
 # define PRINT_SEM "/print_sem"
+# define DEAD_SEM "/dead_sem"
+# define EATEN_AMOUNT_SEM "/eaten_amount"
+# define LAST_EAT_SEM "/last_eat"
 
 // DEFINITIONS
 typedef struct s_vars
@@ -84,11 +82,12 @@ typedef struct s_vars
 bool		start_simulation(t_vars *vars);
 
 // init_vars.c
+void		close_sems_and_unlink(t_vars *vars);
 bool		validate_input(int argc, char **argv, t_vars *vars);
 bool		init_vars(t_vars *vars);
 
 // simulation.c
-void		*philo_sim(t_vars *vars);
+void		philo_sim(t_vars *vars);
 void		sleep_process(t_vars *vars, t_timeval *time);
 void		eat_process(t_vars *vars, t_timeval *time);
 void		put_forks(t_vars *vars);

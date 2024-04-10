@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:27:36 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/08 16:54:40 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:19:12 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void	*philo_checker(t_vars *vars)
 {
 	while (1)
 	{
-		if (check_die(vars) == true || check_eaten_amount(vars) == true)
-			exit(0);
+		if (check_die(vars) == true)
+			exit(1);
+		if (check_eaten_amount(vars) == true)
+			exit(1);
 	}
 }
 
@@ -43,6 +45,7 @@ bool	check_die(t_vars *vars)
 		vars->is_dead = true;
 		sem_post(vars->dead_sem);
 		sem_post(vars->last_eat_sem);
+		sem_wait(vars->print_sem);
 		return (true);
 	}
 	sem_post(vars->last_eat_sem);

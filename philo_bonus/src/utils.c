@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:35:54 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/08 18:42:22 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:13:38 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void	my_usleep(long long ms, t_vars *vars)
 	long long	start;
 	t_timeval	time;
 
+	(void )vars;
 	start = time_in_ms(&time);
 	while (time_in_ms(&time) - start <= ms)
 	{
-		if (is_dead(vars) == true)
-			break ;
-		usleep(10);
+		// if (is_dead(vars) == true)
+		// 	break ;
+		usleep(500);
 	}
 }
 
