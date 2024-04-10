@@ -6,7 +6,7 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:27:36 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/10 14:19:12 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:56:59 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*philo_checker(t_vars *vars)
 		if (check_die(vars) == true)
 			exit(1);
 		if (check_eaten_amount(vars) == true)
-			exit(1);
+			exit(0);
 	}
 }
 

@@ -6,18 +6,11 @@
 /*   By: aggrigor <aggrigor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 15:08:37 by aggrigor          #+#    #+#             */
-/*   Updated: 2024/04/10 14:34:42 by aggrigor         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:03:45 by aggrigor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo_bonus.h"
-// #include <stdlib.h>
-// bool	config_philo_process_args(t_vars *vars, pid_t pid, int i)
-// {
-// 	vars->philos_pids[i] = pid;
-// 	vars->id = i;
-// 	return (true);
-// }
 
 void	wait_processes(t_vars *vars)
 {
